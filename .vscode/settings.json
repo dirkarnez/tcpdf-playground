@@ -1,0 +1,15 @@
+{
+    "terminal.integrated.profiles.windows": {
+        "PowerShell": null,
+        "Windows PowerShell": null,
+        "Command Prompt": {
+            "path": ["${env:windir}\\System32\\cmd.exe"],
+            "env": { 
+                "PATH": "${env:USERPROFILE}\\Downloads\\laragon-php-8.0.0-portable-v6.0.0\\bin\\php\\php-8.0.0-Win32-vs16-x64"
+            }
+        }
+    },
+    "terminal.integrated.defaultProfile.windows": "Command Prompt",
+    "C_Cpp.autoAddFileAssociations": false,
+    "php.validate.executablePath": "..\\bin\\php\\php-8.0.0-Win32-vs16-x64\\php.exe"
+}
