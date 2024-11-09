@@ -2,6 +2,9 @@ tcpdf-playground
 ================
 [tecnickcom/TCPDF: Official clone of PHP library to generate PDF documents and barcodes](https://github.com/tecnickcom/tcpdf)
 
+### Fonts
+- [notofonts/noto-cjk: Noto CJK fonts](https://github.com/notofonts/noto-cjk)
+
 ### Development on Windows
 - [dirkarnez/laragon-portable](https://github.com/dirkarnez/laragon-portable)
 
