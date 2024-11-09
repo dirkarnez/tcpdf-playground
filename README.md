@@ -1,6 +1,6 @@
-tc-lib-pdf-playground
-=====================
-Based on https://github.com/tecnickcom/tc-lib-pdf/blob/main/examples/index.php
+tcpdf-playground
+================
+[tecnickcom/TCPDF: Official clone of PHP library to generate PDF documents and barcodes](https://github.com/tecnickcom/tcpdf)
 
 ### Development on Windows
 - [dirkarnez/laragon-portable](https://github.com/dirkarnez/laragon-portable)
