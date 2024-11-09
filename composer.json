@@ -1,5 +1,5 @@
 {
     "require": {
-        "tecnickcom/tc-lib-pdf": "8.0.81"
+        "tecnickcom/tcpdf": "6.7.7"
     }
 }

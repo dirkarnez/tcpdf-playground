@@ -1,114 +1,126 @@
 <?php
+//============================================================+
+// File name   : example_006.php
+// Begin       : 2008-03-04
+// Last Update : 2013-05-14
+//
+// Description : Example 006 for TCPDF class
+//               WriteHTML and RTL support
+//
+// Author: Nicola Asuni
+//
+// (c) Copyright:
+//               Nicola Asuni
+//               Tecnick.com LTD
+//               www.tecnick.com
+//               info@tecnick.com
+//============================================================+
+
 /**
- * index.php
- *
- * @since       2017-05-08
- * @category    Library
- * @package     Pdf
- * @author      Nicola Asuni <info@tecnick.com>
- * @copyright   2002-2024 Nicola Asuni - Tecnick.com LTD
- * @license     http://www.gnu.org/copyleft/lesser.html GNU-LGPL v3 (see LICENSE.TXT)
- * @link        https://github.com/tecnickcom/tc-lib-pdf
- *
- * This file is part of tc-lib-pdf software library.
+ * Creates an example PDF TEST document using TCPDF
+ * @package com.tecnick.tcpdf
+ * @abstract TCPDF - Example: WriteHTML and RTL support
+ * @author Nicola Asuni
+ * @since 2008-03-04
  */
 
-// NOTE: run make deps fonts in the project root to generate the dependencies and example fonts.
-
-// autoloader when using Composer
+// Include the main TCPDF library (search for installation path).
 require(__DIR__ . './vendor/autoload.php');
 
+// create new PDF document
+$pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 
-define('OUTPUT_FILE', 'example.pdf');
+// set document information
+$pdf->SetCreator(PDF_CREATOR);
+$pdf->SetAuthor('Nicola Asuni');
+$pdf->SetTitle('TCPDF Example 006');
+$pdf->SetSubject('TCPDF Tutorial');
+$pdf->SetKeywords('TCPDF, PDF, example, test, guide');
 
-// define fonts directory
-// define('K_PATH_FONTS', __DIR__ . './fonts');
+// set default header data
+$pdf->SetHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, PDF_HEADER_TITLE.' 006', PDF_HEADER_STRING);
 
-// $buffer = new \Com\Tecnick\Pdf\Font\Stack(1);
-// new \Com\Tecnick\Pdf\Font\Import(__DIR__.'./fonts/OpenSans-Regular.ttf');
+// set header and footer fonts
+$pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
+$pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
 
+// set default monospaced font
+$pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
 
+// set margins
+$pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
+$pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
+$pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
 
-// main TCPDF object
-$pdf = new \Com\Tecnick\Pdf\Tcpdf(
-    'mm', // string $unit = 'mm',
-    true, // bool $isunicode = true,
-    false, // bool $subsetfont = false,
-    true, // bool $compress = true,
-    '', // string $mode = '',
-    null, // ?ObjEncrypt $objEncrypt = null,
-);
+// set auto page breaks
+$pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
 
-// ----------
+// set image scale factor
+$pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
 
+// // set some language-dependent strings (optional)
+// if (@file_exists(dirname(__FILE__).'/lang/eng.php')) {
+//     require_once(dirname(__FILE__).'/lang/eng.php');
+//     $pdf->setLanguageArray($l);
+// }
 
-$pdf->setCreator('tc-lib-pdf');
-$pdf->setAuthor('John Doe');
-$pdf->setSubject('tc-lib-pdf example');
-$pdf->setTitle('Example');
-$pdf->setKeywords('TCPDF tc-lib-pdf example');
-$pdf->setPDFFilename('test_index.pdf');
+// ---------------------------------------------------------
+// set default font subsetting mode
+$pdf->setFontSubsetting(true);
 
-// $pdf->setViewerPreferences(['DisplayDocTitle' => true]);
+$fontname = TCPDF_FONTS::addTTFfont('./fonts/03_NotoSerifCJK-TTF-VF/Variable/TTF/NotoSerifCJKhk-VF.ttf', 'NotoSerifCJKhk', '', 10);
 
-// $pdf->enableDefaultPageContent();
+// use the font
+// $pdf->SetFont($fontname, '', 14, '', false);
 
+// // set font
+$pdf->SetFont($fontname, '', 10);
 
+// add a page
+$pdf->AddPage();
 
-try {
-    $import = new \Com\Tecnick\Pdf\Font\Import(
-        realpath(__DIR__.'./fonts/OpenSans-Regular.ttf')
-    );
-    $fontname = $import->getFontName();
-} catch (Exception) {
+// create some HTML content
+$subtable = '<table border="1" cellspacing="6" cellpadding="4"><tr><td>a</td><td>b</td></tr><tr><td>c</td><td>d</td></tr></table>';
 
-}
+$html = '<h2>HTML TABLE:</h2>
+<table border="1" cellspacing="3" cellpadding="4">
+    <tr>
+        <th>#</th>
+        <th align="right">中文 tę łódź jeża</th>
+        <th align="left">LEFT align</th>
+        <th>中文</th>
+    </tr>
+    <tr>
+        <td>1</td>
+        <td bgcolor="#cccccc" align="center" colspan="2">A1 ex<i>amp</i>le <a href="http://www.tcpdf.org">link</a> column span. One two tree four five six seven eight nine ten.<br />line after br<br /><small>small text</small> normal <sub>subscript</sub> normal <sup>superscript</sup> normal  bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla<ol><li>first<ol><li>sublist</li><li>sublist</li></ol></li><li>second</li></ol><small color="#FF0000" bgcolor="#FFFF00">small small small small small small small small small small small small small small small small small small small small</small></td>
+        <td>4B</td>
+    </tr>
+    <tr>
+        <td>'.$subtable.'</td>
+        <td bgcolor="#0000FF" color="yellow" align="center">A2 € &euro; &#8364; &amp; è &egrave;<br/>A2 € &euro; &#8364; &amp; è &egrave;</td>
+        <td bgcolor="#FFFF00" align="left"><font color="#FF0000">Red</font> Yellow BG</td>
+        <td>4C</td>
+    </tr>
+    <tr>
+        <td>1A</td>
+        <td rowspan="2" colspan="2" bgcolor="#FFFFCC">2AA<br />2AB<br />2AC</td>
+        <td bgcolor="#FF0000">4D</td>
+    </tr>
+    <tr>
+        <td>1B</td>
+        <td>4E</td>
+    </tr>
+    <tr>
+        <td>1C</td>
+        <td>2C</td>
+        <td>3C</td>
+        <td>4F</td>
+    </tr>
+</table>';
 
+// output the HTML content
+$pdf->writeHTML($html, true, false, true, false, '');
+// ---------------------------------------------------------
 
-// echo $fontname;
-$bfont2 = $pdf->font->insert($pdf->pon, 'opensans', 'BI', 24);
-
-
-// ----------
-// Add first page
-
-$page01 = $pdf->addPage();
-
-// $pdf->page->addContent($bfont2['out']);
-// $pdf->addPage();
-// alternative to set the current font (last entry in the font stack):
-// $pdf->page->addContent($pdf->font->getOutCurrentFont());
-
-// // Add text
-$txt = $pdf->getTextLine(
-    'Test PDF text with justification (stretching).',
-    0,
-    $pdf->toUnit($bfont2['ascent']),
-    $page01['width']
-);
-
-$pdf->page->addContent($txt);
-
-$style7 = [
-    'lineWidth' => 0.5,
-    'lineCap' => 'butt',
-    'lineJoin' => 'miter',
-    'dashArray' => [],
-    'dashPhase' => 0,
-    'lineColor' => 'darkorange',
-    'fillColor' => 'palegreen',
-];
-
-$pdf->graph->setPageWidth($page01['width']);
-$pdf->graph->setPageHeight($page01['height']);
-
-$circle1 = $pdf->graph->getCircle(25, 105, 20);
-$pdf->page->addContent($circle1);
-
-$circle2 = $pdf->graph->getCircle(25, 105, 10, 90, 180, '', $style7);
-$pdf->page->addContent($circle2);
-
-$rawpdf = $pdf->getOutPDFString();
-$pdf->renderPDF($rawpdf);
-// echo $pdf->getMIMEAttachmentPDF($rawpdf);
-
+//Close and output PDF document
+$pdf->Output('example_006.pdf', 'I');
