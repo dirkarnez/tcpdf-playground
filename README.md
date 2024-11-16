@@ -2,6 +2,10 @@ tcpdf-playground
 ================
 [tecnickcom/TCPDF: Official clone of PHP library to generate PDF documents and barcodes](https://github.com/tecnickcom/tcpdf)
 
+### Notes
+- **PDF generation is memory consuming**
+  - add `ini_set('memory_limit', '-1');` at the beginning of the php web app
+
 ### Fonts
 - [notofonts/noto-cjk: Noto CJK fonts](https://github.com/notofonts/noto-cjk)
 
