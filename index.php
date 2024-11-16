@@ -24,6 +24,8 @@
  * @since 2008-03-04
  */
 
+ini_set('memory_limit', '-1');
+
 // Include the main TCPDF library (search for installation path).
 require(__DIR__ . './vendor/autoload.php');
 
